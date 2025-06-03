@@ -54,6 +54,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <string name="toastWifiConfigurationComplete">Configuration Complete</string>
   <string name="toastRestartingRobot">Restarting Robot</string>
   <string name="toastWifiUpBeforeProgrammingMode">The Robot Controller must be fully up and running before entering Program and Manage Mode.</string>
+  <string name="toastRobotSetupComplete">Robot Setup Complete</string>
+  <string name="toastRestartRobotComplete">Robot Restart Complete</string>
+
+  <!-- Permission explanations -->
+  <string name="permRcWriteExternalStorageExplain">The Robot Controller app needs permission to write to external storage to save configuration files and logs.</string>
+  <string name="permRcReadExternalStorageExplain">The Robot Controller app needs permission to read from external storage to load configuration files.</string>
+  <string name="permRcCameraExplain">The Robot Controller app needs camera permission to use vision processing features.</string>
+  <string name="permAccessLocationExplain">The Robot Controller app needs location permission for WiFi Direct functionality.</string>
+  <string name="permReadPhoneState">The Robot Controller app needs phone state permission for device identification.</string>
+  <string name="permGenericExplain">The Robot Controller app needs this permission to function properly.</string>
+
+  <!-- Preferences -->
+  <string name="pref_rc_connected">pref_rc_connected</string>
+  <string name="pref_warn_about_2_4_ghz_band">pref_warn_about_2_4_ghz_band</string>
+  <string name="pref_warn_about_obsolete_software">pref_warn_about_obsolete_software</string>
+  <string name="pref_warn_about_mismatched_app_versions">pref_warn_about_mismatched_app_versions</string>
+  <string name="pref_warn_about_incorrect_clocks">pref_warn_about_incorrect_clocks</string>
+  <string name="pref_wifi_automute">pref_wifi_automute</string>
+  <string name="pref_pairing_kind">pref_pairing_kind</string>
+  <string name="pref_app_theme">pref_app_theme</string>
+
+  <!-- Theme change notification -->
+  <string name="appThemeChangeRestartNotifyRC">App theme changed. Please restart the Robot Controller app.</string>
 
   <!-- for interpreting pref_app_theme contents. may be override in merged resources -->
   <integer-array name="app_theme_ids">
@@ -67,6 +90,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <string translatable="false" name="pref_ftc_season_year_of_current_rc">pref_ftc_season_year_of_current_rc_new</string>
 
+  <string name="packageNameRobotController">com.qualcomm.ftcrobotcontroller</string>
   <string name="packageName">@string/packageNameRobotController</string>
 
 </resources>

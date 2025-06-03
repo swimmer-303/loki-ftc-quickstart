@@ -13,9 +13,6 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
-    id 'com.diffplug.spotless' version '6.25.0'
-    id 'io.gitlab.arturbosch.detekt' version '1.23.4'
-    id 'org.owasp.dependencycheck' version '9.0.7'
 }
 
 // Include dependencies from shared file
@@ -39,12 +36,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -74,108 +71,4 @@ dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit:1.9.25'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-}
-
-// Spotless configuration for code formatting
-spotless {
-    java {
-        target '**/*.java'
-        googleJavaFormat('1.19.2').aosp().reflowLongStrings()
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
-        
-        // Custom formatting rules for FTC
-        custom 'FTC License Header', {
-            if (!it.startsWith('/*')) {
-                return '/* Copyright (c) ' + new Date().format('yyyy') + ' FIRST. All rights reserved.\n' +
-                       ' *\n' +
-                       ' * Redistribution and use in source and binary forms, with or without modification,\n' +
-                       ' * are permitted (subject to the limitations in the disclaimer below) provided that\n' +
-                       ' * the following conditions are met:\n' +
-                       ' */\n\n' + it
-            }
-            return it
-        }
-    }
-    
-    kotlin {
-        target '**/*.kt'
-        ktlint('1.0.1').editorConfigOverride([
-            'indent_size': '4',
-            'continuation_indent_size': '4',
-            'max_line_length': '120',
-            'disabled_rules': 'no-wildcard-imports'
-        ])
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-    
-    format 'misc', {
-        target '**/*.gradle', '**/*.md', '**/.gitignore'
-        trimTrailingWhitespace()
-        indentWithSpaces(2)
-        endWithNewline()
-    }
-}
-
-// Detekt configuration for Kotlin static analysis
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-    config.setFrom("$projectDir/config/detekt/detekt.yml")
-    baseline = file("$projectDir/config/detekt/baseline.xml")
-    
-    reports {
-        html.required = true
-        xml.required = true
-        txt.required = true
-        sarif.required = true
-        md.required = true
-    }
-}
-
-// Dependency vulnerability checking
-dependencyCheck {
-    format = 'HTML'
-    suppressionFile = 'config/dependency-check-suppressions.xml'
-    failBuildOnCVSS = 7.0
-    
-    analyzers {
-        experimentalEnabled = true
-        archiveEnabled = true
-        jarEnabled = true
-        centralEnabled = true
-        nexusEnabled = false
-        pyDistributionEnabled = false
-        pyPackageEnabled = false
-        rubygemsEnabled = false
-        opensslEnabled = false
-        cmakeEnabled = false
-        autoconfEnabled = false
-        composerEnabled = false
-        nodeEnabled = false
-        nuspecEnabled = false
-        assemblyEnabled = false
-        msbuildEnabled = false
-        nugetconfEnabled = false
-    }
-}
-
-// Custom tasks for development workflow
-tasks.register('checkAll') {
-    dependsOn 'spotlessCheck', 'detekt', 'dependencyCheckAnalyze', 'test'
-    group = 'verification'
-    description = 'Run all code quality checks and tests'
-}
-
-tasks.register('formatAll') {
-    dependsOn 'spotlessApply'
-    group = 'formatting'
-    description = 'Apply code formatting to all source files'
-}
-
-// Ensure code quality checks run before build
-tasks.named('build') {
-    dependsOn 'spotlessCheck'
 }

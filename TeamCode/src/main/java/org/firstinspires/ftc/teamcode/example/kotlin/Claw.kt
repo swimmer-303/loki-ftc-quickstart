@@ -12,14 +12,18 @@ object Claw: Subsystem() {
     val name = "claw_servo"
 
     val open: Command
-        get() = ServoToPosition(servo, // SERVO TO MOVE
-            0.9, // POSITION TO MOVE TO
-            this)  // IMPLEMENTED SUBSYSTEM
+        get() = ServoToPosition(
+            servo,
+            0.9,
+            this
+        )
 
     val close: Command
-        get() = ServoToPosition(servo, // SERVO TO MOVE
-            0.2, // POSITION TO MOVE TO
-            this) // IMPLEMENTED SUBSYSTEM
+        get() = ServoToPosition(
+            servo,
+            0.2,
+            this
+        )
 
     override fun initialize() {
         servo = OpModeData.hardwareMap.get(Servo::class.java, name)
